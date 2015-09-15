@@ -1,0 +1,7 @@
+swp*
+*~
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+alice-telegram-bot
