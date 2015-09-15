@@ -1,7 +1,9 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 PROJECT (alice-telegram-bot)
 
-SET (SOURCES main.cpp)
+SET (SOURCES 
+        main.cpp
+        BotApiRequest.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 
