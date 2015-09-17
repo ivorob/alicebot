@@ -5,7 +5,9 @@ SET (SRC_DIR ../src)
 SET (SOURCES 
         AliceBotTestsSuite.cpp
         UserTest.cpp
-        ${SRC_DIR}/User.cpp)
+        MessageTest.cpp
+        ${SRC_DIR}/User.cpp
+        ${SRC_DIR}/Message.cpp)
 
 INCLUDE_DIRECTORIES (../include)
 
