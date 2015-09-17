@@ -1,13 +1,21 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 PROJECT (alice-telegram-bot)
 
+SET (SRC_DIR src)
 SET (SOURCES 
-        main.cpp
-        BotApiRequest.cpp)
+        ${SRC_DIR}/main.cpp
+        ${SRC_DIR}/BotApiRequest.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 
 EXECUTE_PROCESS (COMMAND curl-config --libs OUTPUT_VARIABLE CURL_DEFINITIONS OUTPUT_STRIP_TRAILING_WHITESPACE)
 SET (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CURL_DEFINITIONS}")
 
+INCLUDE_DIRECTORIES (include/)
+
+FIND_LIBRARY (JSON_LIBRARY
+    NAME jsoncpp
+    PATHS /usr/lib /usr/local/lib)
+
 ADD_EXECUTABLE (alice-telegram-bot ${SOURCES})
+TARGET_LINK_LIBRARIES (alice-telegram-bot ${JSON_LIBRARY})
