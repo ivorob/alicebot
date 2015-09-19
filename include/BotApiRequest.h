@@ -12,14 +12,20 @@ class Request {
 public:
     Request() = delete;
     Request(const std::string& token);
-    ~Request();
+    Request(const Request& other);
+    virtual ~Request();
 
-    std::string perform(const std::string& method, const std::string& data = std::string());
+    virtual std::string perform(const std::string& method, const std::string& data = std::string());
+
+    const std::string& getToken() const;
+
+    Request& operator=(const Request& other);
 
     std::string urlencode(const std::string& text);
+protected:
+    CURL *curl;
 private:
     std::string token;
-    CURL *curl;
 };
 
 }

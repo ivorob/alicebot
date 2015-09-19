@@ -21,6 +21,15 @@ bot::api::Request::Request(const std::string& token)
     }
 }
 
+bot::api::Request::Request(const Request& other)
+    : token(other.token)
+{
+    this->curl = curl_easy_init();
+    if (!this->curl) {
+        //TODO: generate exception
+    }
+}
+
 std::string
 bot::api::Request::perform(const std::string& method, const std::string& data)
 {
@@ -48,6 +57,22 @@ bot::api::Request::perform(const std::string& method, const std::string& data)
 bot::api::Request::~Request()
 {
     curl_easy_cleanup(this->curl);
+}
+
+const std::string&
+bot::api::Request::getToken() const
+{
+    return this->token;
+}
+
+bot::api::Request&
+bot::api::Request::operator=(const Request& other)
+{
+    if (this != &other) {
+        this->token = other.token;
+    }
+
+    return *this;
 }
 
 std::string
