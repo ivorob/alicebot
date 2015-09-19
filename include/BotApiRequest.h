@@ -15,6 +15,8 @@ public:
     ~Request();
 
     std::string perform(const std::string& method, const std::string& data = std::string());
+
+    std::string urlencode(const std::string& text);
 private:
     std::string token;
     CURL *curl;

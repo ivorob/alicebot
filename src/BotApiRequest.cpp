@@ -16,6 +16,9 @@ bot::api::Request::Request(const std::string& token)
     : token(token)
 {
     this->curl = curl_easy_init();
+    if (!this->curl) {
+        //TODO generate exception
+    }
 }
 
 std::string
@@ -45,4 +48,20 @@ bot::api::Request::perform(const std::string& method, const std::string& data)
 bot::api::Request::~Request()
 {
     curl_easy_cleanup(this->curl);
+}
+
+std::string
+bot::api::Request::urlencode(const std::string& text)
+{
+    std::string result;
+
+    if (!text.empty()) {
+        char *encoded = curl_easy_escape(curl, text.c_str(), text.size());
+        if (encoded != 0) {
+            result = encoded;
+            curl_free(encoded);
+        }
+    }
+
+    return result;
 }

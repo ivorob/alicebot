@@ -9,26 +9,6 @@
 
 #define BOT_TOKEN   "124206091:AAG-WjIsE6i4jC91qsQCmtcG69sli5mARh4"
 
-std::string
-urlencode(const std::string& text)
-{
-    std::string result;
-
-    if (!text.empty()) {
-        CURL *curl = curl_easy_init();
-        if (curl != 0) {
-            char *encoded = curl_easy_escape(curl, text.c_str(), text.size());
-            if (encoded != 0) {
-                result = encoded;
-                curl_free(encoded);
-            }
-            curl_easy_cleanup(curl);
-        }
-    }
-
-    return result;
-}
-
 void
 ShowUser(const bot::User& user)
 {
@@ -53,7 +33,10 @@ ProcessMessageAndGetLastUpdateId(bot::api::Request& request, const std::string& 
 
     int updateId = 0;
     Json::Value updates = root["result"];
-    if (updates.isArray()) {
+    if (updates.isArray() && updates.size() != 0) {
+        std::cout << std::endl << "RESPONSE: " << std::endl;
+        std::cout << response << std::endl;
+
         for (Json::ArrayIndex i = 0;
              i != updates.size();
             ++i)
@@ -74,7 +57,7 @@ ProcessMessageAndGetLastUpdateId(bot::api::Request& request, const std::string& 
 
                 const bot::User& user = message.getFrom();
                 std::stringstream stream;
-                std::string text = urlencode(message.getText());
+                std::string text = request.urlencode(message.getText());
                 stream << "chat_id=" << user.getId() << "&text=" << text;
 
                 request.perform("sendMessage", stream.str());
