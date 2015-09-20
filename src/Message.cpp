@@ -1,5 +1,10 @@
 #include "Message.h"
 
+bot::Message::Message()
+    : messageId(0)
+{
+}
+
 bot::Message::Message(const Json::Value& message)
     : messageId(0)
 {

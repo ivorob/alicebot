@@ -8,9 +8,13 @@ SET (SOURCES
         MessageTest.cpp
         BotApiRequestTest.cpp
         BotApiFakeRequest.cpp
+        BotClientTest.cpp
+        BotMessageObserverTest.cpp
         ${SRC_DIR}/User.cpp
         ${SRC_DIR}/Message.cpp
-        ${SRC_DIR}/BotApiRequest.cpp)
+        ${SRC_DIR}/BotApiRequest.cpp
+        ${SRC_DIR}/BotClient.cpp
+        ${SRC_DIR}/BotMessageObserver.cpp)
 
 ADD_DEFINITIONS (-std=c++0x)
 

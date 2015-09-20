@@ -6,7 +6,9 @@ SET (SOURCES
         ${SRC_DIR}/main.cpp
         ${SRC_DIR}/BotApiRequest.cpp
         ${SRC_DIR}/Message.cpp
-        ${SRC_DIR}/User.cpp)
+        ${SRC_DIR}/User.cpp
+        ${SRC_DIR}/BotMessageObserver.cpp
+        ${SRC_DIR}/BotClient.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 

@@ -15,6 +15,9 @@ public:
 
     CURL *getCurl() const;
 
+    virtual std::string perform(const std::string& method,
+        const std::string& data);
+
     Request& operator=(const bot::api::Request& other);
 };
 

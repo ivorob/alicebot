@@ -9,6 +9,7 @@ namespace bot {
 
 class Message {
 public:
+    Message();
     Message(const Json::Value& message);
 
     int getId() const;

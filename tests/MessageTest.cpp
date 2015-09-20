@@ -30,4 +30,8 @@ MessageTest::testCreate()
     bot::Message message1(root);
     CPPUNIT_ASSERT(message1.getId() == 2);
     CPPUNIT_ASSERT(message1.getText() == "Как твои дела?");
+
+    bot::Message message2;
+    CPPUNIT_ASSERT(message2.getId() == 0);
+    CPPUNIT_ASSERT(message2.getText().empty());
 }
