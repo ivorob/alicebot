@@ -6,8 +6,8 @@
 #include "BotApiRequest.h"
 #include "BotMessageObserver.h"
 #include "BotClient.h"
-#include "User.h"
-#include "Message.h"
+#include "types/User.h"
+#include "types/Message.h"
 
 #define BOT_TOKEN   "124206091:AAG-WjIsE6i4jC91qsQCmtcG69sli5mARh4"
 

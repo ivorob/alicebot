@@ -3,7 +3,7 @@
 
 #include <string>
 #include <jsoncpp/json/json.h>
-#include "User.h"
+#include "types/User.h"
 
 namespace bot {
 

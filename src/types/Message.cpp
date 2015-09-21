@@ -1,4 +1,4 @@
-#include "Message.h"
+#include "types/Message.h"
 
 bot::Message::Message()
     : messageId(0)

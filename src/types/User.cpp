@@ -1,4 +1,4 @@
-#include "User.h"
+#include "types/User.h"
 
 bot::User::User()
     : userId(0)

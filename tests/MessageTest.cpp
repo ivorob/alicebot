@@ -1,6 +1,6 @@
 #include <jsoncpp/json/json.h>
 #include "MessageTest.h"
-#include "Message.h"
+#include "types/Message.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(MessageTest);
 

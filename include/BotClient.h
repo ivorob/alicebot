@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <jsoncpp/json/json.h>
-#include "Message.h"
+#include "types/Message.h"
 
 namespace bot {
 

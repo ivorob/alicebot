@@ -1,6 +1,6 @@
 #include <jsoncpp/json/json.h>
 #include "UserTest.h"
-#include "User.h"
+#include "types/User.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UserTest);
 
