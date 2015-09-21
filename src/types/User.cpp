@@ -88,10 +88,7 @@ bot::User::getLastName() const
 bool
 bot::User::operator==(const bot::User& other) const
 {
-    if (getId() == other.getId() &&
-        getFirstName() == other.getFirstName() &&
-        getLastName() == other.getLastName())
-    {
+    if (getId() == other.getId()) {
         return true;
     }
 

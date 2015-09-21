@@ -55,5 +55,6 @@ UserTest::testCompare()
 
     bot::User user1(1, "Test1", "");
     CPPUNIT_ASSERT(user1 == bot::User(1, "Test1"));
+    CPPUNIT_ASSERT(user1 == bot::User(1));
     CPPUNIT_ASSERT(user1 != bot::User());
 }
