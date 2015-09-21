@@ -15,10 +15,13 @@ public:
     int getId() const;
     User getFrom() const;
     const std::string& getText() const;
+
+    const time_t& getDate() const;
 private:
     int messageId;
     User from;
     std::string text;
+    time_t date;
 };
 
 }

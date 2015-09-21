@@ -25,10 +25,15 @@ public:
         const bot::User& user = message.getFrom();
 
         std::cout << "NEW MESSAGE:" << std::endl;
+
+        std::cout << "From:" << std::endl;
         std::cout << "USER ID   : " << user.getId() << std::endl <<
                      "FIRST NAME: " << user.getFirstName() << std::endl <<
                      "LAST NAME : " << user.getLastName() << std::endl;
-        std::cout << "text: " << std::endl <<
+
+        time_t date = message.getDate();
+        std::cout << "date: " << std::ctime(&date)
+                  << "text: " << std::endl <<
             message.getText() << std::endl << std::endl;
     }
 };

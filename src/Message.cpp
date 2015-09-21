@@ -23,6 +23,11 @@ bot::Message::Message(const Json::Value& message)
         if (text.isString()) {
             this->text = text.asString();
         }
+
+        Json::Value date = message.get("date", 0);
+        if (date.isNumeric()) {
+            this->date = date.asInt();
+        }
     }
 }
 
@@ -42,4 +47,10 @@ const std::string&
 bot::Message::getText() const
 {
     return this->text;
+}
+
+const time_t&
+bot::Message::getDate() const
+{
+    return this->date;
 }

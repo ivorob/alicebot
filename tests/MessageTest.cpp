@@ -35,3 +35,16 @@ MessageTest::testCreate()
     CPPUNIT_ASSERT(message2.getId() == 0);
     CPPUNIT_ASSERT(message2.getText().empty());
 }
+
+void
+MessageTest::testDate()
+{
+    Json::Value root;
+    Json::Reader reader;
+
+    CPPUNIT_ASSERT(reader.parse("{\"message_id\":1,\"from\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\"},\"chat\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\"},\"date\":1442455683,\"text\":\"How are you?\"}", root));
+
+    bot::Message message(root);
+    time_t date = message.getDate();
+    CPPUNIT_ASSERT(static_cast<long int>(date) == 1442455683);
+}
