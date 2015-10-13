@@ -4,7 +4,8 @@ PROJECT (alice-telegram-bot)
 SET (SRC_DIR src)
 SET (BOTAPI_SRC_DIR ../src)
 SET (SOURCES 
-        ${SRC_DIR}/main.cpp)
+        ${SRC_DIR}/main.cpp
+        ${SRC_DIR}/MessageLogger.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 
