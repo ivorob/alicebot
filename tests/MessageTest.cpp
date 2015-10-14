@@ -48,3 +48,18 @@ MessageTest::testDate()
     time_t date = message.getDate();
     CPPUNIT_ASSERT(static_cast<long int>(date) == 1442455683);
 }
+
+void
+MessageTest::testHasAttachments()
+{
+    Json::Value root;
+    Json::Reader reader;
+    CPPUNIT_ASSERT(reader.parse("{\"message_id\":260,\"from\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\"},\"chat\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\",\"type\":\"private\"},\"date\":1444864416,\"photo\":[{\"file_id\":\"AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABIFzITadRgAB36XGAAIC\",\"file_size\":1851,\"width\":85,\"height\":90},{\"file_id\":\"AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABB6bUfXRmslLpMYAAgI\",\"file_size\":19719,\"width\":303,\"height\":320},{\"file_id\":\"AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABK29uSrxfo--o8YAAgI\",\"file_size\":22498,\"width\":379,\"height\":400}]}", root));
+
+    bot::Message message(root);
+    CPPUNIT_ASSERT(message.hasAttachments());
+
+    CPPUNIT_ASSERT(reader.parse("{\"message_id\":1,\"from\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\"},\"chat\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\"},\"date\":1442455683,\"text\":\"How are you?\"}", root));
+    bot::Message message1(root);
+    CPPUNIT_ASSERT(!message1.hasAttachments());
+}

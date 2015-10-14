@@ -1,12 +1,14 @@
 #include "types/Message.h"
 
 bot::Message::Message()
-    : messageId(0)
+    : messageId(0),
+      attachments(false)
 {
 }
 
 bot::Message::Message(const Json::Value& message)
-    : messageId(0)
+    : messageId(0),
+      attachments(false)
 {
     if (message.isObject()) {
         Json::Value messageId = message.get("message_id", 0);
@@ -28,6 +30,8 @@ bot::Message::Message(const Json::Value& message)
         if (date.isNumeric()) {
             this->date = date.asInt();
         }
+
+        this->attachments = message.isMember("photo");
     }
 }
 
@@ -53,4 +57,10 @@ const time_t&
 bot::Message::getDate() const
 {
     return this->date;
+}
+
+bool
+bot::Message::hasAttachments() const
+{
+    return this->attachments;
 }

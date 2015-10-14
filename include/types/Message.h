@@ -17,11 +17,14 @@ public:
     const std::string& getText() const;
 
     const time_t& getDate() const;
+
+    bool hasAttachments() const;
 private:
     int messageId;
     User from;
     std::string text;
     time_t date;
+    bool attachments;
 };
 
 }
