@@ -8,7 +8,8 @@ SET (SOURCES
         ${SRC_DIR}/BotClient.cpp
         # types
         ${SRC_DIR}/types/Message.cpp
-        ${SRC_DIR}/types/User.cpp)
+        ${SRC_DIR}/types/User.cpp
+        ${SRC_DIR}/types/File.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 

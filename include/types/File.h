@@ -8,6 +8,7 @@ namespace bot {
 
 class File {
 public:
+    File();
     File(const Json::Value& file);
 
     const std::string& getId() const;

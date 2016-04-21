@@ -5,7 +5,8 @@ SET (SRC_DIR src)
 SET (BOTAPI_SRC_DIR ../src)
 SET (SOURCES 
         ${SRC_DIR}/main.cpp
-        ${SRC_DIR}/MessageLogger.cpp)
+        ${SRC_DIR}/MessageLogger.cpp
+        ${SRC_DIR}/ImageLogger.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 

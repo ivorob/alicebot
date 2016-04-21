@@ -26,4 +26,9 @@ FileTest::testCreate()
     CPPUNIT_ASSERT(file.getId() == "AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABK29uSrxfo--o8YAAgI");
     CPPUNIT_ASSERT(file.getSize() == 22498);
     CPPUNIT_ASSERT(file.getPath() == "photo/file_1.jpg");
+
+    bot::File file1;
+    CPPUNIT_ASSERT(file1.getId() == "");
+    CPPUNIT_ASSERT(file1.getSize() == 0);
+    CPPUNIT_ASSERT(file1.getPath() == "");
 }

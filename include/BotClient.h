@@ -16,6 +16,7 @@ class Request;
 
 class User;
 class MessageObserver;
+class File;
 
 class Client {
 public:
@@ -35,6 +36,8 @@ public:
     const bot::Message& getLastMessage() const;
 
     void sendMessage(const User& user, const std::string& text);
+    File getFile(const std::string& fileId);
+    std::string downloadFile(const File& file);
 private:
     Json::Value parseResponse(const std::string& response);
     void processUpdates(const Json::Value& updates);

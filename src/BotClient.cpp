@@ -3,6 +3,7 @@
 #include "BotClient.h"
 #include "BotApiRequest.h"
 #include "BotMessageObserver.h"
+#include "types/File.h"
 
 bot::Client::Client(bot::api::Request *request)
     : request(request),
@@ -130,4 +131,25 @@ bot::Client::sendMessage(const User& user, const std::string& text)
     stream << "chat_id=" << user.getId() << "&text=" <<
         this->request->urlencode(text);
     this->request->perform("sendMessage", stream.str());
+}
+
+bot::File
+bot::Client::getFile(const std::string& fileId)
+{
+    std::stringstream stream;
+    stream << "file_id=" << this->request->urlencode(fileId);
+    std::string response = this->request->perform("getFile", stream.str());
+    Json::Value result = parseResponse(response);
+
+    bot::File file;
+    if (result.isObject() && result.isMember("ok") && result["ok"].asBool()) {
+        file = bot::File(result.get("result", Json::Value()));
+    }
+
+    return file;
+}
+
+std::string
+bot::Client::downloadFile(const bot::File& file)
+{
 }

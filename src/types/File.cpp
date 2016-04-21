@@ -1,5 +1,10 @@
 #include "types/File.h"
 
+bot::File::File()
+    : size(0)
+{
+}
+
 bot::File::File(const Json::Value& file)
     : size(0)
 {

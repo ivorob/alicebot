@@ -6,6 +6,7 @@
 #include "BotApiRequest.h"
 #include "BotMessageObserver.h"
 #include "MessageLogger.h"
+#include "ImageLogger.h"
 #include "BotClient.h"
 #include "types/User.h"
 #include "types/Message.h"
@@ -37,6 +38,7 @@ main(int argc, char *argv[])
     bot::Client client(request.get());
 
     client.registerObserver(new MessageLogger);
+    client.registerObserver(new ImageLogger);
     client.registerObserver(new MessageReplyer);
     while (1) {
         client.processOnce();
