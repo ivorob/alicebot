@@ -3,7 +3,7 @@ PROJECT (tests)
 
 SET (SRC_DIR ../src)
 SET (SOURCES 
-        AliceBotTestsSuite.cpp
+        tests.cpp
         UserTest.cpp
         MessageTest.cpp
         BotApiRequestTest.cpp
@@ -32,4 +32,4 @@ FIND_LIBRARY (JSON_LIBRARY
     PATHS /usr/lib /usr/local/lib)
 
 ADD_EXECUTABLE (tests ${SOURCES})
-TARGET_LINK_LIBRARIES (tests cppunit ${JSON_LIBRARY})
+TARGET_LINK_LIBRARIES (tests gtest pthread ${JSON_LIBRARY})

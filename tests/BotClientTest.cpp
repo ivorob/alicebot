@@ -1,10 +1,8 @@
+#include <gtest/gtest.h>
 #include <memory>
-#include "BotClientTest.h"
 #include "BotApiFakeRequest.h"
 #include "BotMessageObserver.h"
 #include "BotClient.h"
-
-CPPUNIT_TEST_SUITE_REGISTRATION(BotClientTest);
 
 namespace {
 
@@ -31,65 +29,51 @@ private:
 
 }
 
-void
-BotClientTest::setUp()
-{
-}
-
-void
-BotClientTest::tearDown()
-{
-}
-
-void
-BotClientTest::testCreate()
+TEST(BotClientTest, create)
 {
     std::unique_ptr<bot::fakeapi::Request> request(new bot::fakeapi::Request("accesstoken"));
     bot::Client client(request.get());
-    CPPUNIT_ASSERT(!client.hasObservers());
+    ASSERT_TRUE(!client.hasObservers());
 }
 
-void
-BotClientTest::testRegisterObserver()
+TEST(BotClientTest, registerObserver)
 {
     std::unique_ptr<bot::fakeapi::Request> request(new bot::fakeapi::Request("accesstoken"));
     bot::Client client(request.get());
-    CPPUNIT_ASSERT(!client.hasObservers());
+    ASSERT_TRUE(!client.hasObservers());
 
     client.registerObserver(nullptr);
-    CPPUNIT_ASSERT(!client.hasObservers());
+    ASSERT_TRUE(!client.hasObservers());
 
     client.registerObserver(new TestObserver);
-    CPPUNIT_ASSERT(client.hasObservers());
+    ASSERT_TRUE(client.hasObservers());
 }
 
-void
-BotClientTest::testRemoveObserver()
+TEST(BotClientTest, removeObserver)
 {
     std::unique_ptr<bot::fakeapi::Request> request(new bot::fakeapi::Request("accesstoken"));
     bot::Client client(request.get());
-    CPPUNIT_ASSERT(!client.hasObservers());
+    ASSERT_TRUE(!client.hasObservers());
 
     client.registerObserver(new TestObserver("Logger"));
-    CPPUNIT_ASSERT(client.hasObservers());
+    ASSERT_TRUE(client.hasObservers());
     client.removeObserver("WrongName");
-    CPPUNIT_ASSERT(client.hasObservers());
+    ASSERT_TRUE(client.hasObservers());
     client.removeObserver("Logger");
-    CPPUNIT_ASSERT(!client.hasObservers());
+    ASSERT_TRUE(!client.hasObservers());
 }
 
-void
-BotClientTest::testNotification()
+TEST(BotClientTest, notification)
 {
     std::unique_ptr<bot::fakeapi::Request> request(new bot::fakeapi::Request("accesstoken"));
     bot::Client client(request.get());
-    CPPUNIT_ASSERT(!client.hasObservers());
+    ASSERT_TRUE(!client.hasObservers());
 
     TestObserver *observer = new TestObserver("Logger");
     client.registerObserver(observer);
-    CPPUNIT_ASSERT(client.hasObservers());
+    ASSERT_TRUE(client.hasObservers());
 
-    CPPUNIT_ASSERT(observer->getText().empty());
+    ASSERT_TRUE(observer->getText().empty());
     client.processOnce();
-    CPPUNIT_ASSERT_EQUAL(std::string("How are you?"), observer->getText());
+    ASSERT_EQ("How are you?", observer->getText());
 }

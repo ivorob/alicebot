@@ -1,34 +1,21 @@
+#include <gtest/gtest.h>
 #include <jsoncpp/json/json.h>
-#include "FileTest.h"
 #include "types/File.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(FileTest);
-
-void
-FileTest::setUp()
-{
-}
-
-void
-FileTest::tearDown()
-{
-}
-
-void
-FileTest::testCreate()
+TEST(FileTest, create)
 {
     Json::Value root;
     Json::Reader reader;
 
-    CPPUNIT_ASSERT(reader.parse("{\"file_id\":\"AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABK29uSrxfo--o8YAAgI\",\"file_size\":22498,\"file_path\":\"photo\\/file_1.jpg\"}", root));
+    ASSERT_TRUE(reader.parse("{\"file_id\":\"AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABK29uSrxfo--o8YAAgI\",\"file_size\":22498,\"file_path\":\"photo\\/file_1.jpg\"}", root));
 
     bot::File file(root);
-    CPPUNIT_ASSERT(file.getId() == "AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABK29uSrxfo--o8YAAgI");
-    CPPUNIT_ASSERT(file.getSize() == 22498);
-    CPPUNIT_ASSERT(file.getPath() == "photo/file_1.jpg");
+    ASSERT_TRUE(file.getId() == "AgADAgADrKcxGzyA9AQsk9BigTA_s0BGhCoABK29uSrxfo--o8YAAgI");
+    ASSERT_TRUE(file.getSize() == 22498);
+    ASSERT_TRUE(file.getPath() == "photo/file_1.jpg");
 
     bot::File file1;
-    CPPUNIT_ASSERT(file1.getId() == "");
-    CPPUNIT_ASSERT(file1.getSize() == 0);
-    CPPUNIT_ASSERT(file1.getPath() == "");
+    ASSERT_TRUE(file1.getId() == "");
+    ASSERT_TRUE(file1.getSize() == 0);
+    ASSERT_TRUE(file1.getPath() == "");
 }

@@ -7,3 +7,4 @@ Makefile
 alice-telegram-bot
 tags
 *.so
+tests/tests

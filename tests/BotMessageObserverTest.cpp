@@ -1,4 +1,4 @@
-#include "BotMessageObserverTest.h"
+#include <gtest/gtest.h>
 #include "BotMessageObserver.h"
 
 namespace {
@@ -16,21 +16,8 @@ public:
 
 }
 
-CPPUNIT_TEST_SUITE_REGISTRATION(BotMessageObserverTest);
-
-void
-BotMessageObserverTest::setUp()
-{
-}
-
-void
-BotMessageObserverTest::tearDown()
-{
-}
-
-void
-BotMessageObserverTest::testName()
+TEST(BotMessageObserver, name)
 {
     TestObserver observer("Logger");
-    CPPUNIT_ASSERT_EQUAL(std::string("Logger"), observer.getName());
+    ASSERT_EQ(std::string("Logger"), observer.getName());
 }
