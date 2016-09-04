@@ -38,7 +38,7 @@ main(int argc, char *argv[])
     bot::Client client(request.get());
 
     client.registerObserver(new MessageLogger);
-    client.registerObserver(new ImageLogger);
+    //client.registerObserver(new ImageLogger);
     client.registerObserver(new MessageReplyer);
     while (1) {
         client.processOnce();

@@ -25,5 +25,10 @@ FIND_LIBRARY (JSON_LIBRARY
     NAME jsoncpp
     PATHS /usr/lib /usr/local/lib)
 
+SET (CMAKE_FIND_LIBRARY_SUFFIX ".a")
+FIND_LIBRARY (CURL_LIBRARY
+    NAME curl
+    PATHS /usr/lib /usr/local/lib)
+
 ADD_LIBRARY(alicebot SHARED ${SOURCES})
-TARGET_LINK_LIBRARIES (alicebot ${JSON_LIBRARY})
+TARGET_LINK_LIBRARIES (alicebot ${JSON_LIBRARY} ${CURL_LIBRARY})
