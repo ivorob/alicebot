@@ -1,4 +1,4 @@
-swp*
+*swp
 *~
 CMakeFiles
 CMakeCache.txt
@@ -7,4 +7,5 @@ Makefile
 alice-telegram-bot
 tags
 *.so
+*.dylib
 tests/tests

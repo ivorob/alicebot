@@ -2,7 +2,7 @@
 #define __ALICE_BOT_USER_H__
 
 #include <string>
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 
 namespace bot {
 
