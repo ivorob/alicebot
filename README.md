@@ -10,3 +10,4 @@ To compile on Windows platform you can use the following commands below, but now
 `nmake`
 
 ## TODO
+- Windows building
