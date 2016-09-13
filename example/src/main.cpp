@@ -2,7 +2,7 @@
 #include <chrono>
 #include <thread>
 #include <memory>
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 #include "BotApiRequest.h"
 #include "BotMessageObserver.h"
 #include "MessageLogger.h"
