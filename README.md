@@ -9,5 +9,18 @@ To compile on Windows platform you can use the following commands below, but now
 `cmake -G "NMake Makefiles"`
 `nmake`
 
+## Supported types
+- User
+- Message
+- File
+- PhotoSize
+
+## Supoported methods
+- sendMessage
+- getFile
+- getUpdates
+
 ## TODO
+- Work with files
+- Work with images
 - Windows building
