@@ -6,7 +6,7 @@ namespace {
 size_t
 write_to_string(void *data, size_t size, size_t count, void *stream)
 {
-    ((std::string *)stream)->append((char *)data, 0, size * count);
+    ((std::string *)stream)->append((char *)data, size * count);
     return size * count;
 }
 
@@ -31,9 +31,8 @@ bot::api::Request::Request(const Request& other)
 }
 
 std::string
-bot::api::Request::perform(const std::string& method, const std::string& data)
+bot::api::Request::performUrl(const std::string& url, const std::string& data)
 {
-    std::string url = "https://api.telegram.org/bot" + this->token + "/" + method;
     curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(this->curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(this->curl, CURLOPT_SSL_VERIFYHOST, 0L);
@@ -43,7 +42,10 @@ bot::api::Request::perform(const std::string& method, const std::string& data)
     curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &response);
 
     if (!data.empty()) {
+        curl_easy_setopt(this->curl, CURLOPT_POST, true);
         curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, data.c_str());
+    } else {
+        curl_easy_setopt(this->curl, CURLOPT_POST, false);
     }
 
     CURLcode result = curl_easy_perform(this->curl);
@@ -52,6 +54,20 @@ bot::api::Request::perform(const std::string& method, const std::string& data)
     }
 
     return response;
+}
+
+std::string
+bot::api::Request::perform(const std::string& method, const std::string& data)
+{
+    std::string url = "https://api.telegram.org/bot" + this->token + "/" + method;
+    return performUrl(url, data);
+}
+
+std::string
+bot::api::Request::downloadFile(const std::string& path)
+{
+    std::string url = "https://api.telegram.org/file/bot" + this->token + "/" + path;
+    return performUrl(url);
 }
 
 bot::api::Request::~Request()

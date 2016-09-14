@@ -1,5 +1,5 @@
-#ifndef __ALICE_MESSAGE_LOGGER_H__
-#define __ALICE_MESSAGE_LOGGER_H__
+#ifndef __ALICE_IMAGE_LOGGER_H__
+#define __ALICE_IMAGE_LOGGER_H__
 
 #include "BotMessageObserver.h"
 
@@ -15,4 +15,4 @@ private:
     bool makeDirectory(const std::string& directory);
 };
 
-#endif //__ALICE_MESSAGE_LOGGER_H__
+#endif //__ALICE_IMAGE_LOGGER_H__

@@ -4,10 +4,13 @@
 #include <string>
 #include <json/json.h>
 #include "types/User.h"
+#include "types/PhotoSize.h"
 
 namespace bot {
 
 class Message {
+public:
+    typedef std::vector<bot::PhotoSize> Photo;
 public:
     Message();
     Message(const Json::Value& message);
@@ -19,12 +22,15 @@ public:
     const time_t& getDate() const;
 
     bool hasAttachments() const;
+    const Photo& getPhoto() const;
+private:
+    void fetchPhoto(const Json::Value& photo);
 private:
     int messageId;
     User from;
     std::string text;
     time_t date;
-    bool attachments;
+    std::vector<bot::PhotoSize> photo;
 };
 
 }

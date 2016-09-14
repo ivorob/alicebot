@@ -1,14 +1,12 @@
 #include "types/Message.h"
 
 bot::Message::Message()
-    : messageId(0),
-      attachments(false)
+    : messageId(0)
 {
 }
 
 bot::Message::Message(const Json::Value& message)
-    : messageId(0),
-      attachments(false)
+    : messageId(0)
 {
     if (message.isObject()) {
         Json::Value messageId = message.get("message_id", 0);
@@ -31,7 +29,18 @@ bot::Message::Message(const Json::Value& message)
             this->date = date.asInt();
         }
 
-        this->attachments = message.isMember("photo");
+        Json::Value photo = message.get("photo", Json::Value());
+        if (photo.isArray()) {
+            fetchPhoto(photo);
+        }
+    }
+}
+
+void
+bot::Message::fetchPhoto(const Json::Value& photo)
+{
+    for (const Json::Value& photoSize : photo) {
+        this->photo.push_back(photoSize);
     }
 }
 
@@ -62,5 +71,11 @@ bot::Message::getDate() const
 bool
 bot::Message::hasAttachments() const
 {
-    return this->attachments;
+    return !this->photo.empty();
+}
+
+const bot::Message::Photo&
+bot::Message::getPhoto() const
+{
+    return this->photo;
 }

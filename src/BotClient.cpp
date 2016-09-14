@@ -152,5 +152,5 @@ bot::Client::getFile(const std::string& fileId)
 std::string
 bot::Client::downloadFile(const bot::File& file)
 {
-    return std::string();
+    return this->request->downloadFile(file.getPath());
 }

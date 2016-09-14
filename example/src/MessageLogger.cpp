@@ -24,7 +24,8 @@ MessageLogger::handleMessage(bot::Client& client)
         std::string directory = createOutputDirectory(user.getId());
         std::string filename = makeFilename(directory);
         std::ofstream output(filename, std::ios::out | std::ios::app);
-        if (output.is_open()) {
+        const std::string& text = message.getText();
+        if (output.is_open() && !text.empty()) {
             output << "NEW MESSAGE:" << std::endl;
             output << "-------------------------" << std::endl;
 
@@ -35,7 +36,7 @@ MessageLogger::handleMessage(bot::Client& client)
             time_t date = message.getDate();
             output << "date: " << std::ctime(&date)
                    << "text: " << std::endl
-                   << message.getText() << std::endl << std::endl;
+                   << text << std::endl << std::endl;
         }
     }
 };

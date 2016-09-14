@@ -48,3 +48,41 @@ TEST(MessageTest, hasAttachments)
     bot::Message message1(root);
     ASSERT_TRUE(!message1.hasAttachments());
 }
+
+TEST(MessageTest, getPhoto)
+{
+    Json::Value root;
+    Json::Reader reader;
+    ASSERT_TRUE(reader.parse("{\"message_id\":285,\"from\":{\"id\":83132476,\"first_name\":\"Ivan\",\"last_name\":\"Vorobyev\",\"username\":\"pusir\"},\"chat\":{\"id\":83132476,\"first_name\":\"Ivan\",\"last_name\":\"Vorobyev\",\"username\":\"pusir\",\"type\":\"private\"},\"date\":1473808506,\"photo\":[{\"file_id\":\"AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABNFxXLdHE1HMY-sBAAEC\",\"file_size\":1137,\"width\":90,\"height\":67},{\"file_id\":\"AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABNwdZiKz6gXgZOsBAAEC\",\"file_size\":15485,\"width\":320,\"height\":240},{\"file_id\":\"AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABLy45sOf8MjHZesBAAEC\",\"file_size\":70722,\"width\":800,\"height\":600},{\"file_id\":\"AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABAQQSQR7nUvLYusBAAEC\",\"file_size\":121233,\"width\":1280,\"height\":960}]}", root));
+
+    bot::Message message(root);
+    ASSERT_TRUE(message.hasAttachments());
+
+    const bot::Message::Photo photo = message.getPhoto();
+    bot::Message::Photo::const_iterator currentPhoto = photo.begin();
+    ASSERT_EQ("AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABNFxXLdHE1HMY-sBAAEC", currentPhoto->getId());
+    ASSERT_EQ(1137, currentPhoto->getSize());
+    ASSERT_EQ(90, currentPhoto->getWidth());
+    ASSERT_EQ(67, currentPhoto->getHeight());
+
+    currentPhoto++;
+    ASSERT_EQ("AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABNwdZiKz6gXgZOsBAAEC", currentPhoto->getId());
+    ASSERT_EQ(15485, currentPhoto->getSize());
+    ASSERT_EQ(320, currentPhoto->getWidth());
+    ASSERT_EQ(240, currentPhoto->getHeight());
+
+    currentPhoto++;
+    ASSERT_EQ("AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABLy45sOf8MjHZesBAAEC", currentPhoto->getId());
+    ASSERT_EQ(70722, currentPhoto->getSize());
+    ASSERT_EQ(800, currentPhoto->getWidth());
+    ASSERT_EQ(600, currentPhoto->getHeight());
+
+    currentPhoto++;
+    ASSERT_EQ("AgADAgADracxGzyA9ARawzSmHIHCZbsUcQ0ABAQQSQR7nUvLYusBAAEC", currentPhoto->getId());
+    ASSERT_EQ(121233, currentPhoto->getSize());
+    ASSERT_EQ(1280, currentPhoto->getWidth());
+    ASSERT_EQ(960, currentPhoto->getHeight());
+
+    currentPhoto++;
+    ASSERT_EQ(photo.end(), currentPhoto);
+}

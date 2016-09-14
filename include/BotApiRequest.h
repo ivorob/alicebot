@@ -16,12 +16,15 @@ public:
     virtual ~Request();
 
     virtual std::string perform(const std::string& method, const std::string& data = std::string());
+    virtual std::string downloadFile(const std::string& path);
 
     const std::string& getToken() const;
 
     Request& operator=(const Request& other);
 
     std::string urlencode(const std::string& text);
+private:
+    std::string performUrl(const std::string& url, const std::string& data = std::string());
 protected:
     CURL *curl;
 private:

@@ -25,7 +25,10 @@ public:
     virtual void handleMessage(bot::Client& client) {
         const bot::Message& message = client.getLastMessage();
         const bot::User& user = message.getFrom();
-        client.sendMessage(user, message.getText());
+        const std::string& text = message.getText();
+        if (!text.empty()) {
+            client.sendMessage(user, message.getText());
+        }
     }
 };
 
@@ -38,7 +41,7 @@ main(int argc, char *argv[])
     bot::Client client(request.get());
 
     client.registerObserver(new MessageLogger);
-    //client.registerObserver(new ImageLogger);
+    client.registerObserver(new ImageLogger);
     client.registerObserver(new MessageReplyer);
     while (1) {
         client.processOnce();

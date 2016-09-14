@@ -9,7 +9,8 @@ SET (SOURCES
         # types
         ${SRC_DIR}/types/Message.cpp
         ${SRC_DIR}/types/User.cpp
-        ${SRC_DIR}/types/File.cpp)
+        ${SRC_DIR}/types/File.cpp
+        ${SRC_DIR}/types/PhotoSize.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 
