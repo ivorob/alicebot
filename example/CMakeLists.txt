@@ -10,7 +10,11 @@ SET (SOURCES
 
 ADD_DEFINITIONS (-std=gnu++0x)
 
-INCLUDE_DIRECTORIES (../include/)
+FIND_PATH (JSONCPP_INCLUDE_DIR
+    NAMES json/json.h
+    PATH_SUFFIXES include include/jsoncpp)
+
+INCLUDE_DIRECTORIES (../include/ ${JSONCPP_INCLUDE_DIR})
 
 # compile library first
 FIND_LIBRARY (BOTAPI_LIBRARY
