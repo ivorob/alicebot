@@ -16,6 +16,7 @@ To compile on Windows platform you can use the following commands below, but now
 - PhotoSize
 
 ## Supoported methods
+- getMe
 - sendMessage
 - getFile
 - getUpdates
@@ -24,7 +25,6 @@ To compile on Windows platform you can use the following commands below, but now
 - Work with files
 - Work with images
 - Windows building
-- Support of `getMe` method
 - Support of `forwardMessage` method
 - Support of `sendAudio` method
 - Support of `sendDocument` method
