@@ -6,12 +6,13 @@ TEST(UserTest, create)
 {
     Json::Value root;
     Json::Reader reader;
-    ASSERT_TRUE(reader.parse("{\"id\":3294738,\"first_name\":\"Test\",\"last_name\":\"User\"}", root));
+    ASSERT_TRUE(reader.parse("{\"id\":3294738,\"first_name\":\"Test\",\"last_name\":\"User\",\"username\":\"TestAliceBot\"}", root));
 
     bot::User user(root);
     ASSERT_TRUE(user.getId() == 3294738);
     ASSERT_TRUE(user.getFirstName() == "Test");
     ASSERT_TRUE(user.getLastName() == "User");
+    ASSERT_TRUE(user.getLogin() == "TestAliceBot");
 
     ASSERT_TRUE(reader.parse("{\"id\":29821374,\"first_name\":\"Test\",\"last_name\":\"User\"}", root));
     bot::User user1(root);
@@ -28,10 +29,11 @@ TEST(UserTest, create)
     ASSERT_TRUE(user3.getFirstName().empty());
     ASSERT_TRUE(user3.getLastName().empty());
 
-    bot::User user4(1, "Test1", "User1");
+    bot::User user4(1, "Test1", "User1", "username");
     ASSERT_TRUE(user4.getId() == 1);
     ASSERT_TRUE(user4.getFirstName() == "Test1");
     ASSERT_TRUE(user4.getLastName() == "User1");
+    ASSERT_TRUE(user4.getLogin() == "username");
 }
 
 TEST(UserTest, compare)

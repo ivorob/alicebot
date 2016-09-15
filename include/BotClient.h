@@ -35,11 +35,13 @@ public:
 
     const bot::Message& getLastMessage() const;
 
+    // general methods
+    User getMe() const;
     void sendMessage(const User& user, const std::string& text);
     File getFile(const std::string& fileId);
     std::string downloadFile(const File& file);
 private:
-    Json::Value parseResponse(const std::string& response);
+    Json::Value parseResponse(const std::string& response) const;
     void processUpdates(const Json::Value& updates);
     void fire();
 private:

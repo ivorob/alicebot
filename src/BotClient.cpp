@@ -61,7 +61,7 @@ bot::Client::processOnce()
 }
 
 Json::Value
-bot::Client::parseResponse(const std::string& response)
+bot::Client::parseResponse(const std::string& response) const
 {
     Json::Value root;
     Json::Reader reader;
@@ -71,7 +71,7 @@ bot::Client::parseResponse(const std::string& response)
 
     Json::Value status = root.get("ok", false);
     if (status.isBool() && !status.asBool()) {
-        //TODO generate exception
+        throw std::runtime_error("Some error in response: " + response);
     }
 
     return root;
@@ -124,6 +124,22 @@ bot::Client::getLastMessage() const
     return this->lastMessage;
 }
 
+bot::User
+bot::Client::getMe() const
+{
+    bot::User user;
+    try {
+        std::string response = this->request->perform("getMe");
+        Json::Value result = parseResponse(response);
+
+        user = bot::User(result.get("result", Json::Value()));
+    } catch (const std::runtime_error& error) {
+        //TODO: log error
+    }
+
+    return user;
+}
+
 void
 bot::Client::sendMessage(const User& user, const std::string& text)
 {
@@ -136,14 +152,16 @@ bot::Client::sendMessage(const User& user, const std::string& text)
 bot::File
 bot::Client::getFile(const std::string& fileId)
 {
-    std::stringstream stream;
-    stream << "file_id=" << this->request->urlencode(fileId);
-    std::string response = this->request->perform("getFile", stream.str());
-    Json::Value result = parseResponse(response);
-
     bot::File file;
-    if (result.isObject() && result.isMember("ok") && result["ok"].asBool()) {
+    try {
+        std::stringstream stream;
+        stream << "file_id=" << this->request->urlencode(fileId);
+        std::string response = this->request->perform("getFile", stream.str());
+        Json::Value result = parseResponse(response);
+
         file = bot::File(result.get("result", Json::Value()));
+    } catch (...) {
+        //TODO: log error
     }
 
     return file;

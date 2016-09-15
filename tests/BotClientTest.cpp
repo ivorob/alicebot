@@ -77,3 +77,15 @@ TEST(BotClientTest, notification)
     client.processOnce();
     ASSERT_EQ("How are you?", observer->getText());
 }
+
+TEST(BotClientTest, getMe)
+{
+    std::unique_ptr<bot::fakeapi::Request> request(new bot::fakeapi::Request("accesstoken"));
+    bot::Client client(request.get());
+
+    bot::User user = client.getMe();
+    ASSERT_EQ(124206091, user.getId());
+    ASSERT_EQ("Alice", user.getFirstName());
+    ASSERT_EQ("TestAliceBot", user.getLogin());
+    ASSERT_TRUE(user.getLastName().empty());
+}

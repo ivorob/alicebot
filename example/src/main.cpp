@@ -40,6 +40,12 @@ main(int argc, char *argv[])
     std::unique_ptr<bot::api::Request> request(new bot::api::Request(BOT_TOKEN));
     bot::Client client(request.get());
 
+    bot::User bot = client.getMe();
+    std::cout << "Starting bot: @" << bot.getLogin() << " ["
+        << bot.getFirstName() << " " << bot.getLastName() << "]...";
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << "\tOK" << std::endl;
+
     client.registerObserver(new MessageLogger);
     client.registerObserver(new ImageLogger);
     client.registerObserver(new MessageReplyer);

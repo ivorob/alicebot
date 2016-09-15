@@ -5,10 +5,11 @@ bot::User::User()
 {
 }
 
-bot::User::User(int userId, const std::string& firstName, const std::string& lastName)
+bot::User::User(int userId, const std::string& firstName, const std::string& lastName, const std::string& username)
     : userId(userId),
       firstName(firstName),
-      lastName(lastName)
+      lastName(lastName),
+      username(username)
 {
 }
 
@@ -25,6 +26,7 @@ bot::User::fetchData(const Json::Value& user)
         this->userId = fetchUserId(user);
         this->firstName = fetchFirstName(user);
         this->lastName = fetchLastName(user);
+        this->username = fetchLogin(user);
     }
 }
 
@@ -42,7 +44,7 @@ bot::User::fetchUserId(const Json::Value& user)
 }
 
 std::string
-bot::User::fetchFirstName(const Json::Value& user)
+bot::User::fetchFirstName(const Json::Value& user) const
 {
     const char *defaultValue = "";
 
@@ -55,7 +57,7 @@ bot::User::fetchFirstName(const Json::Value& user)
 }
 
 std::string
-bot::User::fetchLastName(const Json::Value& user)
+bot::User::fetchLastName(const Json::Value& user) const
 {
     const char *defaultValue = "";
 
@@ -65,6 +67,17 @@ bot::User::fetchLastName(const Json::Value& user)
     }
 
     return defaultValue;
+}
+
+std::string
+bot::User::fetchLogin(const Json::Value& user) const
+{
+    Json::Value username = user.get("username", std::string()); 
+    if (username.isString()) {
+        return username.asString();
+    }
+
+    return std::string();
 }
 
 int
@@ -83,6 +96,12 @@ const std::string&
 bot::User::getLastName() const
 {
     return this->lastName;
+}
+
+const std::string&
+bot::User::getLogin() const
+{
+    return this->username;
 }
 
 bool

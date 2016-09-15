@@ -35,6 +35,8 @@ bot::fakeapi::Request::perform(const std::string& method,
                  "\"chat\":{\"id\":123456,\"first_name\":\"Test\","
                  "\"last_name\":\"User\"},\"date\":1442358956,"
                  "\"text\":\"How are you?\"}}]}";
+    } else if (method == "getMe") {
+        result = "{\"ok\":true,\"result\":{\"id\":124206091,\"first_name\":\"Alice\",\"username\":\"TestAliceBot\"}}";
     }
 
     return result;
