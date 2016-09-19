@@ -10,6 +10,7 @@ namespace bot {
 
 class Chat : public User {
 public:
+    Chat();
     Chat(int64_t id,
          const std::string& type,
          const std::string& firstName = std::string(),

@@ -37,6 +37,8 @@ bot::fakeapi::Request::perform(const std::string& method,
                  "\"text\":\"How are you?\"}}]}";
     } else if (method == "getMe") {
         result = "{\"ok\":true,\"result\":{\"id\":124206091,\"first_name\":\"Alice\",\"username\":\"TestAliceBot\"}}";
+    } else if (method == "getChat") {
+        result = "{\"ok\":true,\"result\":{\"id\":83132472,\"first_name\":\"Test\",\"last_name\":\"User\",\"username\":\"testuser\",\"type\":\"private\",\"title\":\"sometitle\"}}";
     }
 
     return result;

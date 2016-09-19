@@ -21,6 +21,7 @@ To compile on Windows platform you can use the following commands below, but now
 - sendMessage
 - getFile
 - getUpdates
+- getChat
 
 ## TODO
 - Work with files
@@ -40,7 +41,6 @@ To compile on Windows platform you can use the following commands below, but now
 - Support of `kickChatMember` method
 - Support of `leaveChat` method
 - Support of `unbanChatMember` method
-- Support of `getChat` method
 - Support of `getChatAdministrators` method
 - Support of `getChatMembersCount` method
 - Support of `getChatMember` method

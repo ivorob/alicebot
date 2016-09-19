@@ -3,6 +3,7 @@
 #include "BotApiFakeRequest.h"
 #include "BotMessageObserver.h"
 #include "BotClient.h"
+#include "types/Chat.h"
 
 namespace {
 
@@ -88,4 +89,18 @@ TEST(BotClientTest, getMe)
     ASSERT_EQ("Alice", user.getFirstName());
     ASSERT_EQ("TestAliceBot", user.getLogin());
     ASSERT_TRUE(user.getLastName().empty());
+}
+
+TEST(BotClientTest, getChat)
+{
+    std::unique_ptr<bot::fakeapi::Request> request(new bot::fakeapi::Request("accesstoken"));
+    bot::Client client(request.get());
+
+    bot::Chat chat = client.getChat();
+    ASSERT_EQ(83132472, chat.getId());
+    ASSERT_EQ("private", chat.getType());
+    ASSERT_EQ("sometitle", chat.getTitle());
+    ASSERT_EQ("Test", chat.getFirstName());
+    ASSERT_EQ("User", chat.getLastName());
+    ASSERT_EQ("testuser", chat.getLogin());
 }

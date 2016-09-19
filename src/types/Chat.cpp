@@ -1,5 +1,9 @@
 #include "types/Chat.h"
 
+bot::Chat::Chat()
+{
+}
+
 bot::Chat::Chat(int64_t id, 
     const std::string& type,
     const std::string& firstName,

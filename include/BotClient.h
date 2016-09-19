@@ -5,6 +5,7 @@
 #include <string>
 #include <json/json.h>
 #include "types/Message.h"
+#include "types/Chat.h"
 
 namespace bot {
 
@@ -37,6 +38,8 @@ public:
 
     // general methods
     User getMe() const;
+    Chat getChat() const;
+
     void sendMessage(const User& user, const std::string& text);
     File getFile(const std::string& fileId);
     std::string downloadFile(const File& file);

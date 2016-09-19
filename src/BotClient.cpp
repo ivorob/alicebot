@@ -140,6 +140,22 @@ bot::Client::getMe() const
     return user;
 }
 
+bot::Chat
+bot::Client::getChat() const
+{
+    bot::Chat chat;
+    try {
+        std::string response = this->request->perform("getChat");
+        Json::Value result = parseResponse(response);
+
+        chat = bot::Chat(result.get("result", Json::Value()));
+    } catch (const std::runtime_error& error) {
+        //TODO: log error
+    }
+
+    return chat;
+}
+
 void
 bot::Client::sendMessage(const User& user, const std::string& text)
 {

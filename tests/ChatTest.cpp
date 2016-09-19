@@ -4,6 +4,9 @@
 
 TEST(ChatTest, create)
 {
+    bot::Chat chat2;
+    ASSERT_EQ(0, chat2.getId());
+
     Json::Value root;
     Json::Reader reader;
     ASSERT_TRUE(reader.parse("{\"id\":83132472,\"first_name\":\"Test\",\"last_name\":\"User\",\"username\":\"testuser\",\"type\":\"private\",\"title\":\"sometitle\"}", root));
