@@ -10,7 +10,8 @@ SET (SOURCES
         ${SRC_DIR}/types/Message.cpp
         ${SRC_DIR}/types/User.cpp
         ${SRC_DIR}/types/File.cpp
-        ${SRC_DIR}/types/PhotoSize.cpp)
+        ${SRC_DIR}/types/PhotoSize.cpp
+        ${SRC_DIR}/types/Chat.cpp)
 
 ADD_DEFINITIONS (-std=gnu++0x)
 

@@ -12,13 +12,15 @@ SET (SOURCES
         BotMessageObserverTest.cpp
         PhotoSizeTest.cpp
         FileTest.cpp
+        ChatTest.cpp
         ${SRC_DIR}/BotApiRequest.cpp
         ${SRC_DIR}/BotClient.cpp
         ${SRC_DIR}/BotMessageObserver.cpp
         ${SRC_DIR}/types/User.cpp
         ${SRC_DIR}/types/Message.cpp
         ${SRC_DIR}/types/PhotoSize.cpp
-        ${SRC_DIR}/types/File.cpp)
+        ${SRC_DIR}/types/File.cpp
+        ${SRC_DIR}/types/Chat.cpp)
 
 ADD_DEFINITIONS (-std=c++0x)
 

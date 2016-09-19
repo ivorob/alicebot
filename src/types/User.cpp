@@ -5,7 +5,7 @@ bot::User::User()
 {
 }
 
-bot::User::User(int userId, const std::string& firstName, const std::string& lastName, const std::string& username)
+bot::User::User(int64_t userId, const std::string& firstName, const std::string& lastName, const std::string& username)
     : userId(userId),
       firstName(firstName),
       lastName(lastName),
@@ -30,10 +30,10 @@ bot::User::fetchData(const Json::Value& user)
     }
 }
 
-int
-bot::User::fetchUserId(const Json::Value& user)
+int64_t
+bot::User::fetchUserId(const Json::Value& user) const
 {
-    int defaultValue = 0;
+    int64_t defaultValue = 0;
 
     Json::Value userId = user.get("id", defaultValue);
     if (userId.isNumeric()) {
@@ -80,7 +80,7 @@ bot::User::fetchLogin(const Json::Value& user) const
     return std::string();
 }
 
-int
+int64_t
 bot::User::getId() const
 {
     return this->userId;

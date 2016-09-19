@@ -14,6 +14,7 @@ To compile on Windows platform you can use the following commands below, but now
 - Message
 - File
 - PhotoSize
+- Chat
 
 ## Supoported methods
 - getMe
