@@ -35,6 +35,17 @@ TEST(MessageTest, testDate)
     ASSERT_TRUE(static_cast<long int>(date) == 1442455683);
 }
 
+TEST(MessageTest, getChat)
+{
+    Json::Value root;
+    Json::Reader reader;
+    ASSERT_TRUE(reader.parse("{\"message_id\":1,\"from\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\"},\"chat\":{\"id\":123456,\"first_name\":\"Test\",\"last_name\":\"User\"},\"date\":1442455683,\"text\":\"How are you?\"}", root));
+
+    bot::Message message(root);
+    const bot::Chat chat = message.getChat();
+    ASSERT_EQ(123456, chat.getId());
+}
+
 TEST(MessageTest, hasAttachments)
 {
     Json::Value root;

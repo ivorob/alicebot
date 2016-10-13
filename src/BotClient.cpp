@@ -1,8 +1,10 @@
 #include <algorithm>
 #include <sstream>
+#include <iostream>
 #include "BotClient.h"
 #include "BotApiRequest.h"
 #include "BotMessageObserver.h"
+#include "RequestParam.h"
 #include "types/File.h"
 
 bot::Client::Client(bot::api::Request *request)
@@ -53,10 +55,12 @@ bot::Client::processOnce()
     stream << "offset=" << this->updateId;
 
     try {
-        std::string response = this->request->perform("getUpdates", stream.str());
+        std::string response = this->request->perform("getUpdates",
+                1, new HttpRequest::Param<int>("offset", this->updateId));
         Json::Value root = parseResponse(response);
         processUpdates(root["result"]);
-    } catch (...) { //TODO set particular exception
+    } catch (const std::exception& e) { //TODO set particular exception
+        std::cout << e.what() << std::endl;
     }
 }
 
@@ -159,10 +163,9 @@ bot::Client::getChat() const
 void
 bot::Client::sendMessage(const User& user, const std::string& text)
 {
-    std::stringstream stream;
-    stream << "chat_id=" << user.getId() << "&text=" <<
-        this->request->urlencode(text);
-    this->request->perform("sendMessage", stream.str());
+    this->request->perform("sendMessage", 2,
+            new HttpRequest::Param<int64_t>("chat_id", user.getId()),
+            new HttpRequest::Param<std::string>("text", text));
 }
 
 bot::File
@@ -170,13 +173,13 @@ bot::Client::getFile(const std::string& fileId)
 {
     bot::File file;
     try {
-        std::stringstream stream;
-        stream << "file_id=" << this->request->urlencode(fileId);
-        std::string response = this->request->perform("getFile", stream.str());
+        std::string response = this->request->perform("getFile", 1,
+                new HttpRequest::Param<std::string>("file_id", fileId));
         Json::Value result = parseResponse(response);
 
         file = bot::File(result.get("result", Json::Value()));
-    } catch (...) {
+    } catch (const std::exception& e) {
+        std::cout << e.what() << std::endl;
         //TODO: log error
     }
 
@@ -187,4 +190,10 @@ std::string
 bot::Client::downloadFile(const bot::File& file)
 {
     return this->request->downloadFile(file.getPath());
+}
+
+std::string
+bot::Client::sendPhoto(const bot::User& user, const std::string& path)
+{
+    return this->request->sendFile(user, path, "sendPhoto", "photo");
 }

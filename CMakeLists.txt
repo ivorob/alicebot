@@ -6,6 +6,7 @@ SET (SOURCES
         ${SRC_DIR}/BotApiRequest.cpp
         ${SRC_DIR}/BotMessageObserver.cpp
         ${SRC_DIR}/BotClient.cpp
+        ${SRC_DIR}/CurlRequest.cpp
         # types
         ${SRC_DIR}/types/Message.cpp
         ${SRC_DIR}/types/User.cpp

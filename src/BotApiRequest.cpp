@@ -1,5 +1,6 @@
 #include <curl/curl.h>
 #include "BotApiRequest.h"
+#include "RequestParam.h"
 
 namespace {
 
@@ -15,52 +16,30 @@ write_to_string(void *data, size_t size, size_t count, void *stream)
 bot::api::Request::Request(const std::string& token)
     : token(token)
 {
-    this->curl = curl_easy_init();
-    if (!this->curl) {
-        //TODO generate exception
-    }
 }
 
 bot::api::Request::Request(const Request& other)
     : token(other.token)
 {
-    this->curl = curl_easy_init();
-    if (!this->curl) {
-        //TODO: generate exception
-    }
 }
 
 std::string
 bot::api::Request::performUrl(const std::string& url, const std::string& data)
 {
-    curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
-    curl_easy_setopt(this->curl, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(this->curl, CURLOPT_SSL_VERIFYHOST, 0L);
-
-    std::string response;
-    curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION, write_to_string);
-    curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &response);
-
-    if (!data.empty()) {
-        curl_easy_setopt(this->curl, CURLOPT_POST, true);
-        curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, data.c_str());
-    } else {
-        curl_easy_setopt(this->curl, CURLOPT_POST, false);
-    }
-
-    CURLcode result = curl_easy_perform(this->curl);
-    if (result != CURLE_OK) {
-        //TODO: exception
-    }
-
-    return response;
+    this->request.resetFormData();
+    return this->request.perform(url);
 }
 
 std::string
-bot::api::Request::perform(const std::string& method, const std::string& data)
+bot::api::Request::perform(const std::string& method, int params, ...)
 {
     std::string url = "https://api.telegram.org/bot" + this->token + "/" + method;
-    return performUrl(url, data);
+    va_list list;
+    va_start(list, params);
+    this->request.resetFormData();
+    std::string response = this->request.perform(url, params, list);
+    va_end(list);
+    return response;
 }
 
 std::string
@@ -70,9 +49,18 @@ bot::api::Request::downloadFile(const std::string& path)
     return performUrl(url);
 }
 
+std::string
+bot::api::Request::sendFile(const bot::User& user, const std::string& path, const std::string& method, const std::string& filename)
+{
+    std::string url = "https://api.telegram.org/bot" + this->token + "/" + method;
+    this->request.resetFormData();
+    this->request.addFileField(filename, path);
+    return this->request.perform(url, 1, 
+            new HttpRequest::Param<int64_t>("chat_id", user.getId()));
+}
+
 bot::api::Request::~Request()
 {
-    curl_easy_cleanup(this->curl);
 }
 
 const std::string&
@@ -94,15 +82,5 @@ bot::api::Request::operator=(const Request& other)
 std::string
 bot::api::Request::urlencode(const std::string& text)
 {
-    std::string result;
-
-    if (!text.empty()) {
-        char *encoded = curl_easy_escape(curl, text.c_str(), text.size());
-        if (encoded != 0) {
-            result = encoded;
-            curl_free(encoded);
-        }
-    }
-
-    return result;
+    return this->request.urlencode(text);
 }

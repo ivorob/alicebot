@@ -5,6 +5,7 @@
 #include <json/json.h>
 #include "types/User.h"
 #include "types/PhotoSize.h"
+#include "types/Chat.h"
 
 namespace bot {
 
@@ -17,6 +18,7 @@ public:
 
     int getId() const;
     User getFrom() const;
+    Chat getChat() const;
     const std::string& getText() const;
 
     const time_t& getDate() const;
@@ -28,6 +30,7 @@ private:
 private:
     int messageId;
     User from;
+    Chat chat;
     std::string text;
     time_t date;
     std::vector<bot::PhotoSize> photo;

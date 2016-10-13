@@ -10,12 +10,6 @@ bot::fakeapi::Request::Request(const bot::api::Request& other)
 {
 }
 
-CURL *
-bot::fakeapi::Request::getCurl() const
-{
-    return this->curl;
-}
-
 bot::fakeapi::Request&
 bot::fakeapi::Request::operator=(const bot::api::Request& other)
 {
@@ -25,7 +19,7 @@ bot::fakeapi::Request::operator=(const bot::api::Request& other)
 
 std::string
 bot::fakeapi::Request::perform(const std::string& method,
-        const std::string& data)
+        int params, ...)
 {
     std::string result;
     if (method == "getUpdates") {

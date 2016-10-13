@@ -19,6 +19,11 @@ bot::Message::Message(const Json::Value& message)
             this->from = from;
         }
 
+        Json::Value chat = message.get("chat", Json::Value());
+        if (chat.isObject()) {
+            this->chat = chat;
+        }
+
         Json::Value text = message.get("text", "");
         if (text.isString()) {
             this->text = text.asString();
@@ -54,6 +59,12 @@ bot::User
 bot::Message::getFrom() const
 {
     return this->from;
+}
+
+bot::Chat
+bot::Message::getChat() const
+{
+    return this->chat;
 }
 
 const std::string&

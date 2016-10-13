@@ -43,6 +43,7 @@ public:
     void sendMessage(const User& user, const std::string& text);
     File getFile(const std::string& fileId);
     std::string downloadFile(const File& file);
+    std::string sendPhoto(const bot::User& user, const std::string& path);
 private:
     Json::Value parseResponse(const std::string& response) const;
     void processUpdates(const Json::Value& updates);

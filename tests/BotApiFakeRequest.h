@@ -13,10 +13,8 @@ public:
     Request(const std::string& token);
     Request(const bot::api::Request& other);
 
-    CURL *getCurl() const;
-
     virtual std::string perform(const std::string& method,
-        const std::string& data);
+        int params, ...);
 
     Request& operator=(const bot::api::Request& other);
 };

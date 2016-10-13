@@ -43,6 +43,8 @@ ImageLogger::handleMessage(bot::Client& client)
                 if (output.is_open()) {
                     output.write(fileContent.c_str(), fileContent.size());
                     output.close();
+
+                    client.sendPhoto(user, filename);
                 }
             }
         }
