@@ -22,10 +22,9 @@ To compile on Windows platform you can use the following commands below, but now
 - getFile
 - getUpdates
 - getChat
+- sendPhoto
 
 ## TODO
-- Work with files
-- Work with images
 - Windows building
 - Support of `forwardMessage` method
 - Support of `sendAudio` method
