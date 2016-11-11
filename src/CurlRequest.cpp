@@ -1,6 +1,5 @@
 #include <thread>
 #include "CurlRequest.h"
-#include "RequestParam.h"
 
 namespace {
 
@@ -47,32 +46,22 @@ CURLWrapper::Request::addFileField(const std::string& name, const std::string& f
 }
 
 std::string
-CURLWrapper::Request::perform(const std::string& url, int params, va_list list) 
+CURLWrapper::Request::perform(const std::string& url, std::initializer_list<value_type> list) 
 {
     setUrl(url);
 
     std::string response;
-    if (this->files.empty() && params == 0) {
+    if (this->files.empty() && list.size() == 0) {
         response = performGetRequest();
     } else {
-        response = performPostRequest(params, list);
+        response = performPostRequest(list);
     }
 
     return response;
 }
 
 std::string
-CURLWrapper::Request::perform(const std::string& url, int params, ...)
-{
-    va_list list;
-    va_start(list, params);
-    std::string response = perform(url, params, list);
-    va_end(list);
-    return response;
-}
-
-std::string
-CURLWrapper::Request::performPostRequest(int params, va_list list)
+CURLWrapper::Request::performPostRequest(std::initializer_list<value_type> list)
 {
     curl_multi_add_handle(this->multiHandle, this->curl);
 
@@ -86,7 +75,13 @@ CURLWrapper::Request::performPostRequest(int params, va_list list)
 
     struct curl_httppost *formpost = NULL;
     struct curl_httppost *lastptr = NULL;
-    fillPostForm(&formpost, &lastptr, params, list);
+    for (const auto& param : list) {
+        curl_formadd(&formpost,
+            &lastptr,
+            CURLFORM_COPYNAME, param.first.c_str(),
+            CURLFORM_COPYCONTENTS, param.second.c_str(),
+            CURLFORM_END);
+    }
 
     for (const auto& file: this->files) {
         const std::string& fieldName = file.first;
@@ -133,25 +128,6 @@ CURLWrapper::Request::performGetRequest()
 
     handleResponseCode();
     return response;
-}
-
-void
-CURLWrapper::Request::fillPostForm(struct curl_httppost **first, struct curl_httppost **last, int params, va_list list)
-{
-    for (int i = 0; i < params; ++i) {
-        const HttpRequest::BaseParam *param = va_arg(list, HttpRequest::BaseParam *);
-        if (param != 0) {
-            const HttpRequest::BaseParam::value_type value = param->getData();
-
-            curl_formadd(first,
-                last,
-                CURLFORM_COPYNAME, value.first.c_str(),
-                CURLFORM_COPYCONTENTS, value.second.c_str(),
-                CURLFORM_END);
-
-            delete param;
-        }
-    }
 }
 
 void

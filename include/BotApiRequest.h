@@ -12,13 +12,15 @@ namespace api {
 
 class Request {
 public:
+    typedef std::pair<std::string,std::string> value_type;
+public:
     Request() = delete;
     Request(const std::string& token);
     Request(const Request& other);
     virtual ~Request();
 
     virtual std::string sendFile(const bot::User& user, const std::string& path, const std::string& method, const std::string& filename);
-    virtual std::string perform(const std::string& method, int params = 0, ...);
+    virtual std::string perform(const std::string& method, std::initializer_list<value_type> list = std::initializer_list<value_type>());
     virtual std::string downloadFile(const std::string& path);
 
     const std::string& getToken() const;
@@ -33,6 +35,8 @@ protected:
 private:
     std::string token;
 };
+
+typedef std::initializer_list<bot::api::Request::value_type> RequestList;
 
 }
 

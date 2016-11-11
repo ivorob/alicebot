@@ -13,8 +13,7 @@ public:
     Request(const std::string& token);
     Request(const bot::api::Request& other);
 
-    virtual std::string perform(const std::string& method,
-        int params, ...);
+    virtual std::string perform(const std::string& method, bot::api::RequestList list);
 
     Request& operator=(const bot::api::Request& other);
 };

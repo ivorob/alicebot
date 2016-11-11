@@ -10,22 +10,22 @@ namespace CURLWrapper {
 
 class Request {
 public:
+    typedef std::pair<std::string,std::string> value_type;
+public:
     Request(const std::string& url = std::string(), int waitInterval = 10);
     ~Request();
 
     void addFileField(const std::string& name, const std::string& filename);
 
-    std::string perform(const std::string& url, int params, va_list list); 
-    std::string perform(const std::string& url = std::string(), int params = 0, ...);
+    std::string perform(const std::string& url, std::initializer_list<value_type> list = std::initializer_list<value_type>()); 
     std::string urlencode(const std::string& url);
 
     void resetFormData();
     void setUrl(const std::string& url);
 private:
-    std::string performPostRequest(int params, va_list list);
+    std::string performPostRequest(std::initializer_list<value_type> list);
     std::string performGetRequest();
 private:
-    void fillPostForm(struct curl_httppost **first, struct curl_httppost **last, int params, va_list list);
     void handleResponseCode();
 private:
     CURL *curl;

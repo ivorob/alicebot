@@ -1,6 +1,5 @@
 #include <curl/curl.h>
 #include "BotApiRequest.h"
-#include "RequestParam.h"
 
 namespace {
 
@@ -31,15 +30,11 @@ bot::api::Request::performUrl(const std::string& url, const std::string& data)
 }
 
 std::string
-bot::api::Request::perform(const std::string& method, int params, ...)
+bot::api::Request::perform(const std::string& method, std::initializer_list<value_type> list)
 {
     std::string url = "https://api.telegram.org/bot" + this->token + "/" + method;
-    va_list list;
-    va_start(list, params);
     this->request.resetFormData();
-    std::string response = this->request.perform(url, params, list);
-    va_end(list);
-    return response;
+    return this->request.perform(url, list);
 }
 
 std::string
@@ -55,8 +50,8 @@ bot::api::Request::sendFile(const bot::User& user, const std::string& path, cons
     std::string url = "https://api.telegram.org/bot" + this->token + "/" + method;
     this->request.resetFormData();
     this->request.addFileField(filename, path);
-    return this->request.perform(url, 1, 
-            new HttpRequest::Param<int64_t>("chat_id", user.getId()));
+    return this->request.perform(url, 
+            std::initializer_list<value_type>({value_type("chat_id", std::to_string(user.getId()))}));
 }
 
 bot::api::Request::~Request()

@@ -18,8 +18,7 @@ bot::fakeapi::Request::operator=(const bot::api::Request& other)
 }
 
 std::string
-bot::fakeapi::Request::perform(const std::string& method,
-        int params, ...)
+bot::fakeapi::Request::perform(const std::string& method, bot::api::RequestList list)
 {
     std::string result;
     if (method == "getUpdates") {

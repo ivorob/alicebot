@@ -4,7 +4,6 @@
 #include "BotClient.h"
 #include "BotApiRequest.h"
 #include "BotMessageObserver.h"
-#include "RequestParam.h"
 #include "types/File.h"
 
 bot::Client::Client(bot::api::Request *request)
@@ -56,7 +55,9 @@ bot::Client::processOnce()
 
     try {
         std::string response = this->request->perform("getUpdates",
-                1, new HttpRequest::Param<int>("offset", this->updateId));
+                bot::api::RequestList({
+                    bot::api::Request::value_type("offset", std::to_string(this->updateId))
+                }));
         Json::Value root = parseResponse(response);
         processUpdates(root["result"]);
     } catch (const std::exception& e) { //TODO set particular exception
@@ -163,9 +164,11 @@ bot::Client::getChat() const
 void
 bot::Client::sendMessage(const User& user, const std::string& text)
 {
-    this->request->perform("sendMessage", 2,
-            new HttpRequest::Param<int64_t>("chat_id", user.getId()),
-            new HttpRequest::Param<std::string>("text", text));
+    this->request->perform("sendMessage",
+            bot::api::RequestList({
+                bot::api::Request::value_type("chat_id", std::to_string(user.getId())),
+                bot::api::Request::value_type("text", text)
+            }));
 }
 
 bot::File
@@ -173,8 +176,10 @@ bot::Client::getFile(const std::string& fileId)
 {
     bot::File file;
     try {
-        std::string response = this->request->perform("getFile", 1,
-                new HttpRequest::Param<std::string>("file_id", fileId));
+        std::string response = this->request->perform("getFile",
+                bot::api::RequestList({
+                    bot::api::Request::value_type("file_id", fileId)
+                }));
         Json::Value result = parseResponse(response);
 
         file = bot::File(result.get("result", Json::Value()));
