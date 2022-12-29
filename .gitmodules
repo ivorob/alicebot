@@ -1,0 +1,9 @@
+[submodule "third_party/jsoncpp"]
+	path = thirdparty/jsoncpp
+	url = git@github.com:open-source-parsers/jsoncpp.git
+[submodule "thirdparty/googletest"]
+	path = thirdparty/googletest
+	url = git@github.com:google/googletest.git
+[submodule "thirdparty/curl"]
+	path = thirdparty/curl
+	url = git@github.com:curl/curl.git

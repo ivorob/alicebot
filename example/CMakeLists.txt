@@ -8,18 +8,6 @@ SET (SOURCES
         ${SRC_DIR}/MessageLogger.cpp
         ${SRC_DIR}/ImageLogger.cpp)
 
-ADD_DEFINITIONS (-std=gnu++0x)
-
-FIND_PATH (JSONCPP_INCLUDE_DIR
-    NAMES json/json.h
-    PATH_SUFFIXES include include/jsoncpp)
-
-INCLUDE_DIRECTORIES (../include/ ${JSONCPP_INCLUDE_DIR})
-
-# compile library first
-FIND_LIBRARY (BOTAPI_LIBRARY
-    NAME alicebot
-    PATHS ../)
-
-ADD_EXECUTABLE (alice-telegram-bot ${SOURCES})
-TARGET_LINK_LIBRARIES (alice-telegram-bot ${BOTAPI_LIBRARY})
+ADD_EXECUTABLE (${PROJECT_NAME} ${SOURCES})
+TARGET_LINK_LIBRARIES (${PROJECT_NAME} alicebot)
+TARGET_LINK_LIBRARIES (${PROJECT_NAME} jsoncpp_static)

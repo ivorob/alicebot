@@ -8,4 +8,4 @@ alice-telegram-bot
 tags
 *.so
 *.dylib
-tests/tests
+/build
